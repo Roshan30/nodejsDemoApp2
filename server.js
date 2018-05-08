@@ -3,26 +3,35 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+var roshanmain = require('./source/userServices');
+
 app.use(bodyParser.json());
 
-user = require('./modules/users');
+
+
+var tankObj = require('./modules/tank');
 
 mongoose.connect('mongodb://localhost/demoexampledb');
 var db = mongoose.connection;
+console.log(roshanmain);
+roshanmain.roshan(app)
 
 app.get('/', function(req, res) {
     res.send('hello world1');
 });
 
-app.get('/getuserdetails', function(req, res) {
-    user.getuserdetails(function(err, users) {
+
+
+app.get('/getTanks', function(req, res) {
+    tankObj.getTankDetails(function(err, tanks) {
         if (err) {
             throw err;
         }
-        res.json(users);
-    })
+        res.json(tanks);
+    });
 
-})
+});
 
 app.listen('8000');
 console.log('server running');
+process.setMaxListeners(0);

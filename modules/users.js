@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     lastName: {
         type: String,
@@ -12,9 +13,16 @@ var userSchema = mongoose.Schema({
     }
 });
 
-var user = module.exports = mongoose.model('user', userSchema, 'demoCollection');
+var user = module.exports = mongoose.model('user1', userSchema, 'demoCollection');
+
+
 
 //get users 
-module.exports.getuserdetails = function(callback, limit) {
-    user.find(callback).limit(limit);
+module.exports.getuserdetails = function(callback) {
+    user.find(callback);
+}
+
+//get users 
+module.exports.getuserdetailsById = function(idParam, callback) {
+    user.findById(idParam, callback);
 }
